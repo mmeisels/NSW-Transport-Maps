@@ -48,8 +48,8 @@
     function success(position) {
       var mapcanvas = document.createElement('div');
       mapcanvas.id = 'mapcontainer';
-      mapcanvas.style.height = '100%';
-      mapcanvas.style.width = '50%';
+      mapcanvas.style.height = '1024px';
+      mapcanvas.style.width = '768px';
 
       document.querySelector('article').appendChild(mapcanvas);
 
@@ -75,7 +75,7 @@
       socket.on('vehicle',function (data) {
         var marker = busmarkers[data.key];
         if(marker) {
-          console.log(data);
+          //console.log(data);
           marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
         } else {
           var myLatLng = {lat: data.lat, lng: data.lng};
@@ -87,7 +87,7 @@
           //     map: map,
           //     title: data.route,
           //   });
-          console.log('1 '+ data.lat+ ' ' + data.lng +' ' +data.name);
+          //console.log('1 '+ data.lat+ ' ' + data.lng +' ' +data.name);
           // markers[data.name] = getMarker(data.lat, data.lng, data.name);
         }
       });
@@ -153,7 +153,7 @@
       socket.on('train',function (data) {
         var marker = trainmarkers[data.key];
         if(marker) {
-          console.log(data);
+          //console.log(data);
           marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
         } else {
           var myLatLng = {lat: data.lat, lng: data.lng};
