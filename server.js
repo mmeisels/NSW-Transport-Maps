@@ -26,7 +26,7 @@ var oauth2 = require('simple-oauth2')(credentials);
 oauth2.client.getToken(tokenConfig, saveToken);
 
 
-app.listen(8080);
+app.listen(process.env.PORT || 8080, "0.0.0.0");
 
 function handler (req, res) {
   fs.readFile(__dirname + '/index.html',
