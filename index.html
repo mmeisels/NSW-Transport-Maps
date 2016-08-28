@@ -12,8 +12,8 @@
             width: 100%;
           }
           #map {
-            height: 100%;
-            width: 50%;
+            height: 400px;
+            width: 100%;
           }
           #legend {
             font-family: Arial, sans-serif;
@@ -34,7 +34,7 @@
 
   <body>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-        <article id="article">
+        <article>
         </article>
     <script>
 
@@ -48,8 +48,8 @@
     function success(position) {
       var mapcanvas = document.createElement('div');
       mapcanvas.id = 'mapcontainer';
-      //mapcanvas.className = 'map';
-
+      mapcanvas.style.height = '100%';
+      mapcanvas.style.width = '50%';
 
       document.querySelector('article').appendChild(mapcanvas);
 
@@ -65,9 +65,6 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       map = new google.maps.Map(document.getElementById("mapcontainer"), options);
-      document.getElementById("article").style.height = "1024px";
-      document.getElementById("mapcanvas").style.height = "1024px";
-      document.getElementById("mapcontainer").style.width = "1024px";
 
       var marker = new google.maps.Marker({
           position: coords,
