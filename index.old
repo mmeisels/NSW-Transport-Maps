@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NSW Transport Map - Changed 1</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+          html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+          }
+          #map {
+            height: 400px;
+            width: 100px;
+          }
+          #legend {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            padding: 10px;
+            margin: 10px;
+            border: 3px solid #000;
+          }
+          #legend h3 {
+            margin-top: 0;
+          }
+          #legend img {
+            vertical-align: middle;
+          }
+        </style>
+  </head>
+  <script src="/socket.io/socket.io.js"></script>
+  <body>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&key=AIzaSyCj2NrloLcbGl-hYDdy4dMSXBtkivclso4"></script>
+        <article>
+        </article>
+    <script>
+
+    var socket = io('https://'+ window.location.host);
+    var webSocket, myMap;
+    var markers = {};
+    var gmarkers=[];
+    var trainmarkers = [];
+    var busmarkers = [];
+    var map;
+    function success(position) {
+      var mapcanvas = document.createElement('div');
+      mapcanvas.id = 'mapcontainer';
+      mapcanvas.style.height = '800px';
+      mapcanvas.style.width = '600px';
+
+      document.querySelector('article').appendChild(mapcanvas);
+
+      var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+      var options = {
+        zoom: 15,
+        center: coords,
+        mapTypeControl: false,
+        navigationControlOptions: {
+        	style: google.maps.NavigationControlStyle.SMALL
+        },
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      map = new google.maps.Map(document.getElementById("mapcontainer"), options);
+
+      var marker = new google.maps.Marker({
+          position: coords,
+          map: map,
+          title:"You are here!"
+      });
+
+      socket.on('vehicle',function (data) {
+        var marker = busmarkers[data.key];
+        if(marker) {
+          console.log(data);
+          marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
+        } else {
+          var myLatLng = {lat: data.lat, lng: data.lng};
+          addMarker(data.lng, data.lat, data.route, 'https://maps.gstatic.com/mapfiles/ms2/micons/bus.png',map,'bus',data.vehicle)
+        // var marker = new google.maps.Marker({
+          //     position: myLatLng,
+          //     icon:'https://maps.gstatic.com/mapfiles/ms2/micons/bus.png',
+          //     type:'bus',
+          //     map: map,
+          //     title: data.route,
+          //   });
+          console.log('1 '+ data.lat+ ' ' + data.lng +' ' +data.name);
+          // markers[data.name] = getMarker(data.lat, data.lng, data.name);
+        }
+      });
+      function TrainsControl(controlDiv, map, settings, transport) {
+        // Set CSS for the control border.
+          var controlUI = document.createElement('div');
+          controlUI.style.backgroundColor = '#fff';
+          controlUI.style.border = '2px solid #fff';
+          controlUI.style.borderRadius = '3px';
+          controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+          controlUI.style.cursor = 'pointer';
+          controlUI.style.marginBottom = '22px';
+          controlUI.style.textAlign = 'center';
+          controlUI.title = 'Click to recenter the map';
+          controlDiv.appendChild(controlUI);
+
+          // Set CSS for the control interior.
+          var controlText = document.createElement('div');
+          controlText.style.color = 'rgb(25,25,25)';
+          controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+          controlText.style.fontSize = '16px';
+          controlText.style.lineHeight = '38px';
+          controlText.style.paddingLeft = '5px';
+          controlText.style.paddingRight = '5px';
+          if (settings=='On' && transport=='train'){
+            controlText.innerHTML = 'Train On';
+          }
+          else if (settings=='Off' && transport=='train'){
+            controlText.innerHTML = 'Train Off';
+          }
+          else if (settings=='On' && transport=='bus'){
+            controlText.innerHTML = 'Bus On';
+          }
+          else if (settings=='Off' && transport=='bus'){
+            controlText.innerHTML = 'Bus Off';
+          }
+          controlUI.appendChild(controlText);
+
+          controlUI.addEventListener('click', function() {
+            if (settings=='On'){
+              addTestMarkers(transport);
+            }
+            else if (settings=='Off'){
+              DeleteMarker(transport);
+            }
+          });
+      }
+
+      var trainControlDiv = document.createElement('div');
+      var trainControl = new TrainsControl(trainControlDiv, map, 'On', 'train');
+      var trainControlDivOff = document.createElement('div');
+      var trainControlOff = new TrainsControl(trainControlDivOff, map, 'Off','train');
+      var busControlDiv = document.createElement('div');
+      var busControl = new TrainsControl(trainControlDiv, map, 'On','bus');
+      var busControlDivOff = document.createElement('div');
+      var busControlOff = new TrainsControl(trainControlDivOff, map, 'Off','bus');
+      //trainControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(trainControlDiv);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(trainControlDivOff);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(busControlDiv);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(busControlDivOff);
+
+      socket.on('train',function (data) {
+        var marker = trainmarkers[data.key];
+        if(marker) {
+          console.log(data);
+          marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
+        } else {
+          var myLatLng = {lat: data.lat, lng: data.lng};
+          addMarker(data.lng, data.lat, data.route, 'https://maps.gstatic.com/mapfiles/ms2/micons/rail.png',map,'train',data.vehicle)
+          // var marker = new google.maps.Marker({
+          //     position: myLatLng,
+          //     icon:'https://maps.gstatic.com/mapfiles/ms2/micons/rail.png',
+          //     type:'train',
+          //     map: map,
+          //     title: data.route,
+          //   });
+
+          //console.log('1 '+ data.lat+ ' ' + data.lng +' ' +data.name);
+          // markers[data.name] = getMarker(data.lat, data.lng, data.name);
+        }
+      });
+
+    }
+    function DeleteMarker(transport) {
+      if (transport=='train')
+        for(i = 0 ; i< trainmarkers.length; i++) trainmarkers[i].setVisible(false);
+      else if (transport=='bus')
+        for(i = 0 ; i< busmarkers.length; i++) busmarkers[i].setVisible(false);
+      // for (var i = 0; i < markers.length; i++) {
+        //     markers[i].setMap(null);
+        //     //markers.splice(i, 1);
+        // }
+    };
+
+    function addTestMarkers(transport){
+      if (transport=='train')
+        for(i = 0 ; i< trainmarkers.length; i++) trainmarkers[i].setVisible(true);
+      else if (transport=='bus')
+        for(i = 0 ; i< busmarkers.length; i++) busmarkers[i].setVisible(true);
+
+      // for (i = 0; i < markers.length; i++) {
+      //   console.log('Button Pressed ' + markers[i][1]);
+      //   marker = new google.maps.Marker({
+      //      position: new google.maps.LatLng(markers[i][1], markers[i][2]),
+      //      map: map
+      //    });
+      //
+      //   google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      //        return function() {
+      //            infowindow.setContent(markers[i][0]);
+      //            infowindow.open(map, marker);
+      //        }
+      //   })(marker, i));
+      // }
+    }
+
+    function addMarker(lng, lat, title, iconStr, map, type, vehicle) {
+       var myLatLng = {lat: lat, lng: lng};
+       var icon = iconStr;
+       var marker = new google.maps.Marker({position: myLatLng, icon: iconStr,type: type,  title: title, map: map });
+       if (type =='train')
+        marker.id = vehicle;
+       else (type =='bus')
+        marker.id = vehicle;
+       google.maps.event.addListener(marker, "click", function (e) {
+         var content = 'Route: ' + title + '<br /> Latitude: ' + lat + '<br /> Longitude: ' + lng;
+                         content += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker();' value = 'Delete' />";
+                         var infoWindow = new google.maps.InfoWindow({
+                             content: content
+                         });
+                         infoWindow.open(map, marker);
+        });
+        if (type =='train')
+          trainmarkers.push(marker);
+        else (type =='bus')
+          busmarkers.push(marker);
+
+       //gmarkers.push(marker);
+      //  marker.type = iconStr;
+      //  GEvent.addListener(marker, "click", function () {
+      //     // FF 1.5 fix
+      //     var text = "<div style=\"white-space:nowrap;\"><div align=\"center\" class=\"smalltext\">"+title +"</div></div>";
+      //     marker.openInfoWindowHtml(text);
+      //  });
+
+    }
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(success);
+        } else {
+          error('Geo Location is not supported');
+        }
+
+
+
+          function Markers(color){
+            for (var i=0;i<markers.length;i++) {
+               if (markers[i].type=='train')  {
+                  map.removeOverlay(markers[i]);
+               }
+            }
+          }
+
+          // socket.on('vehicle', function (data) {
+          //   console.log(data);
+          //   //socket.emit('my other event', { my: 'data' });
+          // });
+    </script>
+    <label><input type="checkbox" id="trains" checked="checked" onclick="DeleteMarker()" />Trains</label>
+    <label><input type="checkbox" id="buses" onclick="addTestMarkers(map)" />Buses</label>
+    <label><input type="checkbox" id="Ferry" onclick="check()" />Ferry</label>
+
+  </body>
