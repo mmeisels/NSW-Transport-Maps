@@ -10,7 +10,10 @@
     }
   },
   "addons": [
-
+    {
+      "plan": "mongolab:sandbox",
+      "as": "MONGO"
+    }
   ],
   "buildpacks": [
     {
