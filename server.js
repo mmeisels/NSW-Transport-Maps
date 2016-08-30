@@ -77,7 +77,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: config.facebook_api_key,
     clientSecret:config.facebook_api_secret ,
-    callbackURL: 'https://' + process.env.HEROKU_APP_NAME + '/auth/facebook/callback',
+    callbackURL: 'https://' + process.env.HEROKU_APP_NAME + '.herokuapp.com/auth/facebook/callback',
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
