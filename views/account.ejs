@@ -404,7 +404,7 @@
       var mapcanvas = document.createElement('div');
       mapcanvas.id = 'mapcontainer';
       mapcanvas.style.height = '500px';
-      mapcanvas.style.width = '900px';
+      mapcanvas.style.width = '100%';
 
       document.querySelector('article').appendChild(mapcanvas);
 
@@ -705,10 +705,10 @@
           //   }
           // }
 
-          // socket.on('vehicle', function (data) {
-          //   console.log(data);
-          //   //socket.emit('my other event', { my: 'data' });
-          // });
+           socket.on('vehicle', function (data) {
+             console.log(data);
+             //socket.emit('my other event', { my: 'data' });
+           });
     </script>
 </body>
 
