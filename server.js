@@ -155,39 +155,7 @@ function saveToken(error, result) {
 
 io.on('connection', function (socket) {
 
-    var requestSettings = {
-        method: 'GET',
-        url: 'https://api.transport.nsw.gov.au/v1/gtfs/vehiclepos/buses',
-        encoding: null,
-        'auth': {
-            'bearer': token.token.access_token
-        }
-    };
 
-    request.get(requestSettings, function(err, res, body) {
-        if (err) {
-            console.log('Access Token Error', error.message);
-            console.log(error);
-        };
-        var feed = GtfsRealtimeBindings.FeedMessage.decode(body);
-        feed.entity.forEach(function(entity){
-          if (entity.alert) {
-          //   console.log('Route Alert: ' + entity.alert.cause);
-          //   console.log('Route effect: ' + entity.alert.effect);
-          //     console.log('Route header_text: ' + entity.alert.header_text);
-          }
-          if (entity.trip_update) {
-            //console.log('Route Alert: ' + entity.trip_update.delay);
-
-          }
-          if (entity.vehicle) {
-                if (entity.vehicle.position) {
-                  //console.log('Access Token Error');
-                    socket.emit('vehicle',{route: entity.vehicle.trip.route_id, vehicle: entity.vehicle.trip.trip_id, name: entity.vehicle.trip.trip_id, key: entity.vehicle.trip.trip_id, lat:entity.vehicle.position.latitude,lng:entity.vehicle.position.longitude });
-                }
-            }
-        });
-    })
 
     // var requestSettings2 = {
     //     method: 'GET',
@@ -222,6 +190,44 @@ io.on('connection', function (socket) {
     //         }
     //     });
     // })
+
+
+
+  socket.on('my other event', function (data) {
+
+    var requestSettings = {
+        method: 'GET',
+        url: 'https://api.transport.nsw.gov.au/v1/gtfs/vehiclepos/buses',
+        encoding: null,
+        'auth': {
+            'bearer': token.token.access_token
+        }
+    };
+
+    request.get(requestSettings, function(err, res, body) {
+        if (err) {
+            console.log('Access Token Error', error.message);
+            console.log(error);
+        };
+        var feed = GtfsRealtimeBindings.FeedMessage.decode(body);
+        feed.entity.forEach(function(entity){
+          if (entity.alert) {
+          //   console.log('Route Alert: ' + entity.alert.cause);
+          //   console.log('Route effect: ' + entity.alert.effect);
+          //     console.log('Route header_text: ' + entity.alert.header_text);
+          }
+          if (entity.trip_update) {
+            //console.log('Route Alert: ' + entity.trip_update.delay);
+
+          }
+          if (entity.vehicle) {
+                if (entity.vehicle.position) {
+                  //console.log('Access Token Error');
+                    socket.emit('vehicle',{route: entity.vehicle.trip.route_id, vehicle: entity.vehicle.trip.trip_id, name: entity.vehicle.trip.trip_id, key: entity.vehicle.trip.trip_id, lat:entity.vehicle.position.latitude,lng:entity.vehicle.position.longitude });
+                }
+            }
+        });
+    })
 
     var requestSettings1 = {
         method: 'GET',
@@ -258,15 +264,12 @@ io.on('connection', function (socket) {
           if (entity.vehicle) {
             //console.log(' Route Short Name: ' + entity.vehicle.trip.route_short_name + ' TripID: ' + entity.vehicle.trip.trip_id + ' Route ID: ' + entity.vehicle.trip.route_id);
                 if (entity.vehicle.position) {
-                    //console.log('Location: ' +  entity.vehicle.position.latitude + ' ,' + entity.vehicle.position.longitude)
+                    console.log('Location: ' +  entity.vehicle.position.latitude + ' ,' + entity.vehicle.position.longitude)
                     socket.emit('train',{route: entity.vehicle.trip.route_id, vehicle: entity.vehicle.trip.trip_id, name: entity.vehicle.trip.trip_id, key: entity.vehicle.trip.trip_id, lat:entity.vehicle.position.latitude,lng:entity.vehicle.position.longitude });
                 }
             }
         });
     })
-
-  // socket.on('my other event', function (data) {
-  //   console.log(data);
-  // });
+  });
 });
 module.exports = app;
