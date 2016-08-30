@@ -223,6 +223,9 @@ io.on('connection', function (socket) {
     //     });
     // })
 
+
+
+  socket.on('my other event', function (data) {
     var requestSettings1 = {
         method: 'GET',
         url: 'https://api.transport.nsw.gov.au/v1/gtfs/vehiclepos/sydneytrains',
@@ -264,9 +267,6 @@ io.on('connection', function (socket) {
             }
         });
     })
-
-  // socket.on('my other event', function (data) {
-  //   console.log(data);
-  // });
+  });
 });
 module.exports = app;

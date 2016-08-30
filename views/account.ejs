@@ -588,20 +588,7 @@
         else if (transport=='ferry')
           for(i = 0 ; i< ferrymarkers.length; i++) ferrymarkers[i].setVisible(true);
 
-      // for (i = 0; i < markers.length; i++) {
-      //   console.log('Button Pressed ' + markers[i][1]);
-      //   marker = new google.maps.Marker({
-      //      position: new google.maps.LatLng(markers[i][1], markers[i][2]),
-      //      map: map
-      //    });
-      //
-      //   google.maps.event.addListener(marker, 'click', (function(marker, i) {
-      //        return function() {
-      //            infowindow.setContent(markers[i][0]);
-      //            infowindow.open(map, marker);
-      //        }
-      //   })(marker, i));
-      // }
+
     }
 
     function addMarker(lng, lat, title, iconStr, map, type, vehicle) {
@@ -709,6 +696,7 @@
           //   console.log(data);
           //   //socket.emit('my other event', { my: 'data' });
           // });
+          socket.emit('my other event', { my: 'data' });
     </script>
 </body>
 
