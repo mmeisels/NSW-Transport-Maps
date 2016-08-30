@@ -11,8 +11,7 @@
   },
   "addons": [
     {
-      "plan": "mongolab:sandbox",
-      "as": "MONGO"
+      "heroku-postgresql:hobby-dev"
     },
     {
       "plan": "papertrail:choklad"

@@ -5,15 +5,23 @@ var routes = require('./routes');
 var path = require('path');
 var config = require('./oauth.js');
 var User = require('./user.js');
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
+var pg = require('pg');
 var passport = require('passport');
+// var session = require('express-session');
+// var cookieParser = require('cookie-parser');
+// var bodyParser = require('body-parser');
+var config = require('./config/config')
 var fbAuth = require('./authentication.js');
+var FacebookStrategy  =     require('passport-facebook').Strategy
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GithubStrategy = require('passport-github2').Strategy;
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 var InstagramStrategy = require('passport-instagram').Strategy;
-// connect to the database
-mongoose.connect('mongodb://localhost/passport-example');
+
+//mongoose.connect('mongodb://localhost/passport-example');
+var connection = new pg.Pool(process.env.DATABASE_URL || "postgres://@127.0.0.1:5432/nwsbus");
+//var connection = pg.Client();
 
 // *** Travekl stuff
 var request = require('request');
@@ -24,6 +32,7 @@ var tokenConfig = {
     scope: 'user',
     grant_type: 'client_credentials'
 };
+
 var credentials = {
     clientID: 'l7xx37865eae257545cea0c30cfb314c0a18',
     clientSecret: '4b487d1ebffe42cb9fc29a61a2844e7f',
@@ -32,7 +41,6 @@ var credentials = {
     useBasicAuthorizationHeader: true,
     useBodyAuth: false
 };
-//********
 
 var server = app.listen(process.env.PORT || 8080);
 var io = require('socket.io').listen(server);
@@ -51,6 +59,12 @@ app.configure(function() {
   app.use(express.static(__dirname + '/public'));
 });
 
+
+if(config.use_database==='true')
+{
+  connection.connect();
+}
+
 // serialize and deserialize
 passport.serializeUser(function(user, done) {
   //console.log('serializeUser: ' + user._id);
@@ -63,6 +77,20 @@ passport.deserializeUser(function(id, done) {
       else done(err, null);
     });
 });
+
+passport.use(new FacebookStrategy({
+    clientID: config.facebook_api_key,
+    clientSecret:config.facebook_api_secret ,
+    callbackURL: config.callback_url
+  },
+  function(accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+      //Check whether the User exists or not using profile.id
+      //Further DB code.
+      return done(null, profile);
+    });
+  }
+));
 
 // routes
 app.get('/', routes.index);
@@ -96,51 +124,29 @@ app.get('/auth/facebook/callback',
   function(req, res) {
     res.redirect('/account');
   });
-//
-// app.get('/auth/twitter',
-//   passport.authenticate('twitter'),
-//   function(req, res){});
-// app.get('/auth/twitter/callback',
-//   passport.authenticate('twitter', { failureRedirect: '/' }),
-//   function(req, res) {
-//     res.redirect('/account');
-//   });
-//
-// app.get('/auth/github',
-//   passport.authenticate('github'),
-//   function(req, res){});
-// app.get('/auth/github/callback',
-//   passport.authenticate('github', { failureRedirect: '/' }),
-//   function(req, res) {
-//     res.redirect('/account');
-//   });
-//
-// app.get('/auth/google',
-//   passport.authenticate('google', { scope: [
-//     'https://www.googleapis.com/auth/plus.login',
-//     'https://www.googleapis.com/auth/plus.profile.emails.read'
-//   ] }
-// ));
-// app.get('/auth/google/callback',
-//   passport.authenticate('google', { failureRedirect: '/' }),
-//   function(req, res) {
-//     res.redirect('/account');
-//   });
-//
-// app.get('/auth/instagram',
-//   passport.authenticate('instagram'),
-//   function(req, res){});
-// app.get('/auth/instagram/callback',
-//   passport.authenticate('instagram', { failureRedirect: '/' }),
-//   function(req, res) {
-//     res.redirect('/account');
-//   });
 
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
 
+/*config is our configuration variable.*/
+passport.use(new FacebookStrategy({
+    clientID: config.facebook_api_key,
+    clientSecret:config.facebook_api_secret ,
+    callbackURL: config.callback_url
+  },
+  function(accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+      //Check whether the User exists or not using profile.id
+      if(config.use_database==='true')
+      {
+         //Further code of Database.
+      }
+      return done(null, profile);
+    });
+  }
+));
 
 // test authentication
 function ensureAuthenticated(req, res, next) {
