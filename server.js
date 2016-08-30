@@ -106,7 +106,7 @@ app.get('/profile', ensureAuthenticated, function(req, res){
   //  if(err) {
   //    console.log(err);  // handle errors
   //  } else {
-      res.render('profile', { user: user});
+      res.render('profile', { user: req.user});
   //  }
   //});
 });
