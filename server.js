@@ -228,7 +228,7 @@ io.on('connection', function (socket) {
             }
         });
     })
-    
+
     var requestSettings1 = {
         method: 'GET',
         url: 'https://api.transport.nsw.gov.au/v1/gtfs/vehiclepos/sydneytrains',
@@ -264,7 +264,7 @@ io.on('connection', function (socket) {
           if (entity.vehicle) {
             //console.log(' Route Short Name: ' + entity.vehicle.trip.route_short_name + ' TripID: ' + entity.vehicle.trip.trip_id + ' Route ID: ' + entity.vehicle.trip.route_id);
                 if (entity.vehicle.position) {
-                    //console.log('Location: ' +  entity.vehicle.position.latitude + ' ,' + entity.vehicle.position.longitude)
+                    console.log('Location: ' +  entity.vehicle.position.latitude + ' ,' + entity.vehicle.position.longitude)
                     socket.emit('train',{route: entity.vehicle.trip.route_id, vehicle: entity.vehicle.trip.trip_id, name: entity.vehicle.trip.trip_id, key: entity.vehicle.trip.trip_id, lat:entity.vehicle.position.latitude,lng:entity.vehicle.position.longitude });
                 }
             }
