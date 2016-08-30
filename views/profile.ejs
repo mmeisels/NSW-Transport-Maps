@@ -61,10 +61,10 @@
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>Inbox for <%= user.name%></strong>
+                                        <h5 class="media-heading"><strong>Inbox for <%= user.displayName%></strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Sample messages for <%= user.name%></p>
+                                        <p>Sample messages for <%= user.displayName%></p>
                                     </div>
                                 </div>
                             </a>
@@ -102,7 +102,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user.name%> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user.displayName%> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="/profile"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -178,9 +178,7 @@
 
                                           <p>
                                               <strong>id</strong>: <%= user.id %><br>
-                                              <strong>token</strong>: <%= user.token %><br>
-                                              <strong>email</strong>: <%= user.email %><br>
-                                              <strong>name</strong>: <%= user.name %>
+                                              <strong>name</strong>: <%= user.displayName %>
                                           </p>
 
                                   </div>
