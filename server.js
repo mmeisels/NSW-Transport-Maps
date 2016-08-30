@@ -99,7 +99,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
     //   // console.log('User 1' +req.session.passport.user.name);
       res.render('account', { user: req.user});
   //  }
-  });
+  //});
 });
 app.get('/profile', ensureAuthenticated, function(req, res){
   //User.findById(req.session.passport.user, function(err, user) {
@@ -108,7 +108,7 @@ app.get('/profile', ensureAuthenticated, function(req, res){
   //  } else {
       res.render('profile', { user: user});
   //  }
-  });
+  //});
 });
 
 app.get('/auth/facebook',
