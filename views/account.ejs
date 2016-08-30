@@ -705,9 +705,8 @@
           //   }
           // }
 
-           socket.on('vehicle', function (data) {
-             socket.emit('my other event', { my: 'data' });
-           });
+          socket.emit('my other event', { my: 'data' });
+
     </script>
 </body>
 
