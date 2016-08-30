@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -10,7 +9,31 @@
     <meta name="author" content="">
 
     <title>NSW Transport Application</title>
+    <style>
+    th {
+        border-bottom: 1px solid #d6d6d6;
+    }
 
+    tr:nth-child(even) {
+        background: #e9e9e9;
+    }
+    .DivToScroll{
+        background-color: #F5F5F5;
+        border: 1px solid #DDDDDD;
+        border-radius: 4px 0 4px 0;
+        color: #3B3C3E;
+        font-size: 12px;
+        font-weight: bold;
+        left: -1px;
+        padding: 10px 7px 5px;
+      }
+
+    .DivWithScroll{
+        height:120px;
+        overflow:scroll;
+        overflow-x:hidden;
+    }
+    </style>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -22,7 +45,9 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -274,35 +299,70 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Transport Alerts</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="list-group">
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">just now</span>
-                                        <i class="fa fa-fw fa-calendar"></i> Delays updated
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">4 minutes ago</span>
-                                        <i class="fa fa-fw fa-comment"></i> Tweet Received on Delays
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">23 minutes ago</span>
-                                        <i class="fa fa-fw fa-truck"></i> Bus 392 Delayed
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">46 minutes ago</span>
-                                        <i class="fa fa-fw fa-money"></i> Ferry 653 has delayed
-                                    </a>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row">
+                      <div class="col-lg-4">
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Bus Routes</h3>
+
+                              </div>
+                              <div class="panel-body">
+                                  <div class="DivToScroll" data-role="main">
+                                    <div class="DivWithScroll" data-role="page" id="pageone">
+                                      <div data-role="header">
+                                        <form>
+                                          <input id="filterTable-input" data-type="search" placeholder="Search For Transport...">
+                                        </form>
+                                        <table class="table table-bordered" data-role="table" data-mode="columntoggle" id="myTable" data-filter="true" data-input="#filterTable-input">
+                                          <thead>
+                                              <tr>
+                                                  <th>Transport</th>
+                                                  <th>Route</th>
+                                                  <th>Direction</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody id="transportArray">
+                                          </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  </div>
+                                  <div class="text-right">
+                                      <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!--<div class="col-lg-4">
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Transport Alerts</h3>
+                              </div>
+                              <div class="panel-body">
+                                  <div class="list-group">
+                                      <a href="#" class="list-group-item">
+                                          <span class="badge">just now</span>
+                                          <i class="fa fa-fw fa-calendar"></i> Delays updated
+                                      </a>
+                                      <a href="#" class="list-group-item">
+                                          <span class="badge">4 minutes ago</span>
+                                          <i class="fa fa-fw fa-comment"></i> Tweet Received on Delays
+                                      </a>
+                                      <a href="#" class="list-group-item">
+                                          <span class="badge">23 minutes ago</span>
+                                          <i class="fa fa-fw fa-truck"></i> Bus 392 Delayed
+                                      </a>
+                                      <a href="#" class="list-group-item">
+                                          <span class="badge">46 minutes ago</span>
+                                          <i class="fa fa-fw fa-money"></i> Ferry 653 has delayed
+                                      </a>
+                                  </div>
+                                  <div class="text-right">
+                                      <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>-->
                     </div>
                 </div>
                 <!-- /.row -->
@@ -338,6 +398,7 @@
     var trainmarkers = [];
     var ferrymarkers = [];
     var busmarkers = [];
+    var transportArray=[];
     var map;
     function success(position) {
       var mapcanvas = document.createElement('div');
@@ -369,7 +430,7 @@
       socket.on('vehicle',function (data) {
         var marker = busmarkers[data.key];
         if(marker) {
-          console.log(data);
+          //console.log(data);
           marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
         } else {
           var myLatLng = {lat: data.lat, lng: data.lng};
@@ -381,7 +442,7 @@
           //     map: map,
           //     title: data.route,
           //   });
-          console.log('1 '+ data.lat+ ' ' + data.lng +' ' +data.name);
+          //console.log('1 '+ data.lat+ ' ' + data.lng +' ' +data.name);
           // markers[data.name] = getMarker(data.lat, data.lng, data.name);
         }
       });
@@ -460,7 +521,7 @@
       socket.on('train',function (data) {
         var marker = trainmarkers[data.key];
         if(marker) {
-          console.log(data);
+          //console.log(data);
           marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
         } else {
           var myLatLng = {lat: data.lat, lng: data.lng};
@@ -481,7 +542,7 @@
       socket.on('ferry',function (data) {
         var marker = ferrymarkers[data.key];
         if(marker) {
-          console.log(data);
+          //console.log(data);
           marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
         } else {
           var myLatLng = {lat: data.lat, lng: data.lng};
@@ -504,13 +565,13 @@
       if (transport=='train')
         for(i = 0 ; i< trainmarkers.length; i++) trainmarkers[i].setVisible(false);
       else if (transport=='bus'){
-        console.log(transport);
-        console.log(busmarkers.length);
+        //console.log(transport);
+        //console.log(busmarkers.length);
         for(i = 0 ; i< busmarkers.length; i++) busmarkers[i].setVisible(false);
       }
       else if (transport=='ferry'){
-        console.log(transport);
-        console.log(ferrymarkers.length);
+        //console.log(transport);
+        //console.log(ferrymarkers.length);
         for(i = 0 ; i< ferrymarkers.length; i++) ferrymarkers[i].setVisible(false);
       }
       // for (var i = 0; i < markers.length; i++) {
@@ -546,29 +607,35 @@
     function addMarker(lng, lat, title, iconStr, map, type, vehicle) {
        var myLatLng = {lat: lat, lng: lng};
        var icon = iconStr;
+       var arrayRow;
        if (type =='train'){
         var trainmarker = new google.maps.Marker({position: myLatLng, icon: iconStr,type: type,  title: title, map: map });
-        trainmarker.id = vehicle;
+        trainmarker.id = vehicle.replace('.','');
         google.maps.event.addListener(trainmarker, "click", function (e) {
           var content = 'Route: ' + title + '<br /> Latitude: ' + lat + '<br /> Longitude: ' + lng;
-                          content += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker();' value = 'Delete' />";
+                          content += "<br /><input type = 'button' onclick = 'DeleteMarker();' value = 'Delete' />";
                           var infoWindow = new google.maps.InfoWindow({
                               content: content
                           });
                           infoWindow.open(map, trainmarker);
          });
+         transportArray.push('<tr><td>Train</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+vehicle.replace('.','')+');" value = "Find Bus" /></td></tr>');
+         //console.log(transportArray);
+         document.getElementById("transportArray").innerHTML = transportArray;
       }
       else if (type =='bus'){
-        var busmarker = new google.maps.Marker({position: myLatLng, icon: iconStr,type: type,  title: title, map: map });
-        busmarker.id = vehicle;
+        var busmarker = new google.maps.Marker({id:vehicle, position: myLatLng, icon: iconStr,type: type,  title: title, map: map });
+        //busmarker.id = vehicle;
         google.maps.event.addListener(busmarker, "click", function (e) {
-          var content = 'Route: ' + title + '<br /> Latitude: ' + lat + '<br /> Longitude: ' + lng;
-                          content += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker();' value = 'Delete' />";
+          var content = 'Route: ' + title + '<br />Vehicle ID :'+vehicle + '<br /> Latitude: ' + lat + '<br /> Longitude: ' + lng;
+                          content += "<br /><input type = 'button' onclick = 'DeleteMarker();' value = 'Delete' />";
                           var infoWindow = new google.maps.InfoWindow({
                               content: content
                           });
                           infoWindow.open(map, busmarker);
          });
+         transportArray.push('<tr><td>Bus</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+vehicle+');" value = "Find Bus" /></td></tr>');
+         document.getElementById("transportArray").innerHTML = transportArray;
       }
 
         if (type =='train')
@@ -595,14 +662,48 @@
         }
 
 
-
-          function Markers(color){
-            for (var i=0;i<markers.length;i++) {
-               if (markers[i].type=='train')  {
-                  map.removeOverlay(markers[i]);
-               }
+        function MarkerZoomTo(markerIdentifier) {
+            // pt = new google.maps.Marker[markerIdentifier].getPosition();
+            // newpt = new google.maps.LatLng(pt.lat() + .02, pt.lng());
+            // map.panTo(newpt);
+            var position='';
+            for( i=0;i<busmarkers.length; i++ ) {
+              if (busmarkers[i].id==markerIdentifier){
+                //console.log(busmarkers[i].id);
+                //console.log(markerIdentifier);
+                position = busmarkers[i].position;
+              }
             }
+            if(position==''){
+              for( i=0;i<trainmarkers.length; i++ ) {
+                if (trainmarkers[i].id==markerIdentifier){
+                  //console.log(trainmarkers[i].id);
+                  //console.log(markerIdentifier);
+                  position = trainmarkers[i].position;
+                }
+              }
+            }
+              map.panTo(position);
           }
+    // var marker = map.markers[markerIdentifier];
+    //         // Marker marker : googleMap.getMarkers()
+    //         var position = marker.getPosition();
+    //         lat = position.lat();
+    //         lng = position.lng();
+    //         newpt = new google.maps.LatLng(lat, lng);
+    //         map.panTo(newpt);
+    //         //map.setCenter(google.maps.store.Marker[markerIdentifier].getPosition());
+    //     }
+
+
+          //
+          // function Markers(color){
+          //   for (var i=0;i<markers.length;i++) {
+          //      if (markers[i].type=='train')  {
+          //         map.removeOverlay(markers[i]);
+          //      }
+          //   }
+          // }
 
           // socket.on('vehicle', function (data) {
           //   console.log(data);

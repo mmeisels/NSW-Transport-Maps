@@ -53,7 +53,7 @@ app.configure(function() {
 
 // serialize and deserialize
 passport.serializeUser(function(user, done) {
-  console.log('serializeUser: ' + user._id);
+  //console.log('serializeUser: ' + user._id);
   done(null, user._id);
 });
 passport.deserializeUser(function(id, done) {
@@ -72,8 +72,8 @@ app.get('/account', ensureAuthenticated, function(req, res){
     if(err) {
       console.log(err);  // handle errors
     } else {
-      console.log('User 2' +req.session.passport.user);
-      console.log('User 1' +req.session.passport.user.name);
+      // console.log('User 2' +req.session.passport.user);
+      // console.log('User 1' +req.session.passport.user.name);
       res.render('account', { user: user, username:req.session.passport.user.name});
     }
   });
@@ -256,25 +256,25 @@ io.on('connection', function (socket) {
         var feed1 = GtfsRealtimeBindings.FeedMessage.decode(body);
         feed1.entity.forEach(function(entity){
           if (entity.alert) {
-            console.log('Route Alert: ' + entity.alert.cause);
-            console.log('Route effect: ' + entity.alert.effect);
-              console.log('Route header_text: ' + entity.alert.header_text);
+            //console.log('Route Alert: ' + entity.alert.cause);
+            //console.log('Route effect: ' + entity.alert.effect);
+            //console.log('Route header_text: ' + entity.alert.header_text);
           }
           if (entity.trip_update) {
-            console.log('Route Alert: ' + entity.trip_update.delay);
+            //console.log('Route Alert: ' + entity.trip_update.delay);
 
           }
           if (entity.trip) {
-            console.log('Trip ID: ' + entity.trip.trip_id);
-            console.log('route_id ID: ' + entity.trip.route_id);
-            console.log('direction_id ID: ' + entity.trip.direction_id);
-            console.log('start_time ID: ' + entity.trip.start_time);
+            // console.log('Trip ID: ' + entity.trip.trip_id);
+            // console.log('route_id ID: ' + entity.trip.route_id);
+            // console.log('direction_id ID: ' + entity.trip.direction_id);
+            // console.log('start_time ID: ' + entity.trip.start_time);
 
           }
           if (entity.vehicle) {
-            console.log(' Route Short Name: ' + entity.vehicle.trip.route_short_name + ' TripID: ' + entity.vehicle.trip.trip_id + ' Route ID: ' + entity.vehicle.trip.route_id);
+            //console.log(' Route Short Name: ' + entity.vehicle.trip.route_short_name + ' TripID: ' + entity.vehicle.trip.trip_id + ' Route ID: ' + entity.vehicle.trip.route_id);
                 if (entity.vehicle.position) {
-                    console.log('Location: ' +  entity.vehicle.position.latitude + ' ,' + entity.vehicle.position.longitude)
+                    //console.log('Location: ' +  entity.vehicle.position.latitude + ' ,' + entity.vehicle.position.longitude)
                     socket.emit('train',{route: entity.vehicle.trip.route_id, vehicle: entity.vehicle.trip.trip_id, name: entity.vehicle.trip.trip_id, key: entity.vehicle.trip.trip_id, lat:entity.vehicle.position.latitude,lng:entity.vehicle.position.longitude });
                 }
             }
