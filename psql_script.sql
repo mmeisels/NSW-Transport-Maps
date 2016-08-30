@@ -1,8 +1,6 @@
-drop database if exists oauth_test;
+drop database if exists nswbus;
 
-create database oauth_test;
-
-\connect oauth_test;
+create database nswbus;
 
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS facebook;
