@@ -33,6 +33,7 @@ var tokenConfig = {
     scope: 'user',
     grant_type: 'client_credentials'
 };
+console.log(hostname);
 
 var credentials = {
     clientID: 'l7xx37865eae257545cea0c30cfb314c0a18',
@@ -74,7 +75,6 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new FacebookStrategy({
-    console.log(hostname);
     clientID: config.facebook_api_key,
     clientSecret:config.facebook_api_secret ,
     callbackURL: 'https://' + hostname + '/auth/facebook/callback',
