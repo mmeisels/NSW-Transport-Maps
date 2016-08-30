@@ -13,7 +13,11 @@
     {
       "plan": "mongolab:sandbox",
       "as": "MONGO"
+    },
+    {
+      "plan": "papertrail:choklad"
     }
+
   ],
   "buildpacks": [
     {
