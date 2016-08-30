@@ -65,18 +65,12 @@ if(config.use_database==='true')
 {
   connection.connect();
 }
-
-// serialize and deserialize
+// Passport session setup.
 passport.serializeUser(function(user, done) {
-  //console.log('serializeUser: ' + user._id);
-  done(null, user._id);
+  done(null, user);
 });
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user){
-    console.log(user);
-      if(!err) done(null, user);
-      else done(err, null);
-    });
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
 });
 
 passport.use(new FacebookStrategy({
