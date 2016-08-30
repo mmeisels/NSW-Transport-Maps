@@ -4,7 +4,7 @@ var app = express();
 var routes = require('./routes');
 var path = require('path');
 var config = require('./oauth.js');
-var User = require('./user.js');
+//var User = require('./user.js');
 var newrelic = require('newrelic');
 //var mongoose = require('mongoose');
 var pg = require('pg');
@@ -91,23 +91,23 @@ passport.use(new FacebookStrategy({
 app.get('/', routes.index);
 
 app.get('/account', ensureAuthenticated, function(req, res){
-  User.findById(req.session.passport.user, function(err, user) {
-    if(err) {
-      console.log(err);  // handle errors
-    } else {
-      // console.log('User 2' +req.session.passport.user);
-      // console.log('User 1' +req.session.passport.user.name);
-      res.render('account', { user: user, username:req.session.passport.user.name});
-    }
+  //User.findById(req.session.passport.user, function(err, user) {
+  //  if(err) {
+    //   console.log(err);  // handle errors
+    // } else {
+    //   // console.log('User 2' +req.session.passport.user);
+    //   // console.log('User 1' +req.session.passport.user.name);
+      res.render('account', { user: req.user});
+  //  }
   });
 });
 app.get('/profile', ensureAuthenticated, function(req, res){
-  User.findById(req.session.passport.user, function(err, user) {
-    if(err) {
-      console.log(err);  // handle errors
-    } else {
-      res.render('profile', { user: user, username:req.session.passport.user.name});
-    }
+  //User.findById(req.session.passport.user, function(err, user) {
+  //  if(err) {
+  //    console.log(err);  // handle errors
+  //  } else {
+      res.render('profile', { user: user});
+  //  }
   });
 });
 
