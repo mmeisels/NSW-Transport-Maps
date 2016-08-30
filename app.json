@@ -9,9 +9,7 @@
       "quantity": 1
     }
   },
-  "addons": [
-
-  ],
+  "addons": ["heroku-postgresql:hobby-dev", "papertrail", "newrelic:wayne"],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
