@@ -2,7 +2,13 @@
   "name": "nswbus",
   "scripts": {
   },
-  "env": {
+  "env":{
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
+      "required": true
+    }
   },
   "formation": {
     "web": {
