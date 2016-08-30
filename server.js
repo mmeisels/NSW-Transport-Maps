@@ -33,7 +33,7 @@ var tokenConfig = {
     scope: 'user',
     grant_type: 'client_credentials'
 };
-console.log(hostname);
+console.log(process.env.HEROKU_APP_NAME);
 
 var credentials = {
     clientID: 'l7xx37865eae257545cea0c30cfb314c0a18',
@@ -77,7 +77,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: config.facebook_api_key,
     clientSecret:config.facebook_api_secret ,
-    callbackURL: 'https://' + hostname + '/auth/facebook/callback',
+    callbackURL: 'https://' + process.env.HEROKU_APP_NAME + '/auth/facebook/callback',
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
