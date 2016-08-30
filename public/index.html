@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>NSW Transport Application</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<script src="/js/socket.io.js"></script>
+<body>
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&key=AIzaSyCj2NrloLcbGl-hYDdy4dMSXBtkivclso4"></script>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">NSW Transport Dashboard</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu message-dropdown">
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-footer">
+                            <a href="#">Read All New Messages</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu alert-dropdown">
+                        <li>
+                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">View All</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> NSW Transport Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Service Desk</a>
+                    </li>
+                    <li>
+                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Application Settings</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            NSW Transport <br/><small>Realtime Feed</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dashboard"></i> Dashboard
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!--
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Like SB Admin?</strong> Try out <a href="http://startbootstrap.com/template-overviews/sb-admin-2" class="alert-link">SB Admin 2</a> for additional features!
+                        </div>
+                    </div>
+                </div>/.row -->
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">26</div>
+                                        <div>New Comments!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">12</div>
+                                        <div>Running Early</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">124</div>
+                                        <div>On Time Stats</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-support fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">13</div>
+                                        <div>Delay Alerts</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Transport Map</h3>
+                            </div>
+                            <div class="panel-body">
+                              <article>
+                              </article>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Transport Alerts</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">just now</span>
+                                        <i class="fa fa-fw fa-calendar"></i> Delays updated
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">4 minutes ago</span>
+                                        <i class="fa fa-fw fa-comment"></i> Tweet Received on Delays
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">23 minutes ago</span>
+                                        <i class="fa fa-fw fa-truck"></i> Bus 392 Delayed
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">46 minutes ago</span>
+                                        <i class="fa fa-fw fa-money"></i> Ferry 653 has delayed
+                                    </a>
+                                </div>
+                                <div class="text-right">
+                                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="js/plugins/morris/raphael.min.js"></script>
+  <!--  <script src="js/plugins/morris/morris.min.js"></script>-->
+    <!--<script src="js/plugins/morris/morris-data.js"></script>-->
+
+    <script>
+
+    var socket = io('http://'+ window.location.host);
+    var webSocket, myMap;
+    var markers = {};
+    var gmarkers=[];
+    var trainmarkers = [];
+    var ferrymarkers = [];
+    var busmarkers = [];
+    var map;
+    function success(position) {
+      var mapcanvas = document.createElement('div');
+      mapcanvas.id = 'mapcontainer';
+      mapcanvas.style.height = '500px';
+      mapcanvas.style.width = '900px';
+
+      document.querySelector('article').appendChild(mapcanvas);
+
+      var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+      var options = {
+        zoom: 15,
+        center: coords,
+        mapTypeControl: false,
+        navigationControlOptions: {
+          style: google.maps.NavigationControlStyle.SMALL
+        },
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      map = new google.maps.Map(document.getElementById("mapcontainer"), options);
+
+      var marker = new google.maps.Marker({
+          position: coords,
+          map: map,
+          title:"You are here!"
+      });
+
+      socket.on('vehicle',function (data) {
+        var marker = busmarkers[data.key];
+        if(marker) {
+          console.log(data);
+          marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
+        } else {
+          var myLatLng = {lat: data.lat, lng: data.lng};
+          addMarker(data.lng, data.lat, data.route, 'https://maps.gstatic.com/mapfiles/ms2/micons/bus.png',map,'bus',data.vehicle)
+        // var marker = new google.maps.Marker({
+          //     position: myLatLng,
+          //     icon:'https://maps.gstatic.com/mapfiles/ms2/micons/bus.png',
+          //     type:'bus',
+          //     map: map,
+          //     title: data.route,
+          //   });
+          console.log('1 '+ data.lat+ ' ' + data.lng +' ' +data.name);
+          // markers[data.name] = getMarker(data.lat, data.lng, data.name);
+        }
+      });
+      function TrainsControl(controlDiv, map, settings, transport) {
+        // Set CSS for the control border.
+          var controlUI = document.createElement('div');
+          controlUI.style.backgroundColor = '#fff';
+          controlUI.style.border = '2px solid #fff';
+          controlUI.style.borderRadius = '3px';
+          controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+          controlUI.style.cursor = 'pointer';
+          controlUI.style.marginBottom = '22px';
+          controlUI.style.textAlign = 'center';
+          controlUI.title = 'Click to recenter the map';
+          controlDiv.appendChild(controlUI);
+
+          // Set CSS for the control interior.
+          var controlText = document.createElement('div');
+          controlText.style.color = 'rgb(25,25,25)';
+          controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+          controlText.style.fontSize = '16px';
+          controlText.style.lineHeight = '38px';
+          controlText.style.paddingLeft = '5px';
+          controlText.style.paddingRight = '5px';
+          if (settings=='On' && transport=='train'){
+            controlText.innerHTML = 'Train On';
+          }
+          else if (settings=='Off' && transport=='train'){
+            controlText.innerHTML = 'Train Off';
+          }
+          else if (settings=='On' && transport=='bus'){
+            controlText.innerHTML = 'Bus On';
+          }
+          else if (settings=='Off' && transport=='bus'){
+            controlText.innerHTML = 'Bus Off';
+          }
+          else if (settings=='On' && transport=='ferry'){
+            controlText.innerHTML = 'Ferry On';
+          }
+          else if (settings=='Off' && transport=='ferry'){
+            controlText.innerHTML = 'Ferry Off';
+          }
+          controlUI.appendChild(controlText);
+
+          controlUI.addEventListener('click', function() {
+            if (settings=='On'){
+              addTestMarkers(transport);
+            }
+            else if (settings=='Off'){
+              DeleteMarker(transport);
+            }
+          });
+      }
+
+      var trainControlDiv = document.createElement('div');
+      var trainControl = new TrainsControl(trainControlDiv, map, 'On', 'train');
+      var trainControlDivOff = document.createElement('div');
+      var trainControlOff = new TrainsControl(trainControlDivOff, map, 'Off','train');
+      var busControlDiv = document.createElement('div');
+      var busControl = new TrainsControl(busControlDiv, map, 'On','bus');
+      var busControlDivOff = document.createElement('div');
+      var busControlOff = new TrainsControl(busControlDivOff, map, 'Off','bus');
+      var ferryControlDiv = document.createElement('div');
+      var ferryControl = new TrainsControl(ferryControlDiv, map, 'On','ferry');
+      var ferryControlDivOff = document.createElement('div');
+      var ferryControlOff = new TrainsControl(ferryControlDivOff, map, 'Off','ferry');
+
+      //trainControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(trainControlDiv);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(trainControlDivOff);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(busControlDiv);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(busControlDivOff);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(ferryControlDiv);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(ferryControlDivOff);
+
+      socket.on('train',function (data) {
+        var marker = trainmarkers[data.key];
+        if(marker) {
+          console.log(data);
+          marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
+        } else {
+          var myLatLng = {lat: data.lat, lng: data.lng};
+          addMarker(data.lng, data.lat, data.route, 'https://maps.gstatic.com/mapfiles/ms2/micons/rail.png',map,'train',data.vehicle)
+          // var marker = new google.maps.Marker({
+          //     position: myLatLng,
+          //     icon:'https://maps.gstatic.com/mapfiles/ms2/micons/rail.png',
+          //     type:'train',
+          //     map: map,
+          //     title: data.route,
+          //   });
+
+          //console.log('1 '+ data.lat+ ' ' + data.lng +' ' +data.name);
+          // markers[data.name] = getMarker(data.lat, data.lng, data.name);
+        }
+      });
+
+      socket.on('ferry',function (data) {
+        var marker = ferrymarkers[data.key];
+        if(marker) {
+          console.log(data);
+          marker.setPosition(new google.maps.LatLng(data.lat,data.lng));
+        } else {
+          var myLatLng = {lat: data.lat, lng: data.lng};
+          addMarker(data.lng, data.lat, data.route, 'https://maps.gstatic.com/mapfiles/ms2/micons/ferry.png',map,'ferry',data.vehicle)
+          // var marker = new google.maps.Marker({
+          //     position: myLatLng,
+          //     icon:'https://maps.gstatic.com/mapfiles/ms2/micons/rail.png',
+          //     type:'train',
+          //     map: map,
+          //     title: data.route,
+          //   });
+
+          //console.log('1 '+ data.lat+ ' ' + data.lng +' ' +data.name);
+          // markers[data.name] = getMarker(data.lat, data.lng, data.name);
+        }
+      });
+
+    }
+    function DeleteMarker(transport) {
+      if (transport=='train')
+        for(i = 0 ; i< trainmarkers.length; i++) trainmarkers[i].setVisible(false);
+      else if (transport=='bus'){
+        console.log(transport);
+        console.log(busmarkers.length);
+        for(i = 0 ; i< busmarkers.length; i++) busmarkers[i].setVisible(false);
+      }
+      else if (transport=='ferry'){
+        console.log(transport);
+        console.log(ferrymarkers.length);
+        for(i = 0 ; i< ferrymarkers.length; i++) ferrymarkers[i].setVisible(false);
+      }
+      // for (var i = 0; i < markers.length; i++) {
+        //     markers[i].setMap(null);
+        //     //markers.splice(i, 1);
+        // }
+    };
+
+    function addTestMarkers(transport){
+      if (transport=='train')
+        for(i = 0 ; i< trainmarkers.length; i++) trainmarkers[i].setVisible(true);
+      else if (transport=='bus')
+        for(i = 0 ; i< busmarkers.length; i++) busmarkers[i].setVisible(true);
+        else if (transport=='ferry')
+          for(i = 0 ; i< ferrymarkers.length; i++) ferrymarkers[i].setVisible(true);
+
+      // for (i = 0; i < markers.length; i++) {
+      //   console.log('Button Pressed ' + markers[i][1]);
+      //   marker = new google.maps.Marker({
+      //      position: new google.maps.LatLng(markers[i][1], markers[i][2]),
+      //      map: map
+      //    });
+      //
+      //   google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      //        return function() {
+      //            infowindow.setContent(markers[i][0]);
+      //            infowindow.open(map, marker);
+      //        }
+      //   })(marker, i));
+      // }
+    }
+
+    function addMarker(lng, lat, title, iconStr, map, type, vehicle) {
+       var myLatLng = {lat: lat, lng: lng};
+       var icon = iconStr;
+       if (type =='train'){
+        var trainmarker = new google.maps.Marker({position: myLatLng, icon: iconStr,type: type,  title: title, map: map });
+        trainmarker.id = vehicle;
+        google.maps.event.addListener(trainmarker, "click", function (e) {
+          var content = 'Route: ' + title + '<br /> Latitude: ' + lat + '<br /> Longitude: ' + lng;
+                          content += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker();' value = 'Delete' />";
+                          var infoWindow = new google.maps.InfoWindow({
+                              content: content
+                          });
+                          infoWindow.open(map, trainmarker);
+         });
+      }
+      else if (type =='bus'){
+        var busmarker = new google.maps.Marker({position: myLatLng, icon: iconStr,type: type,  title: title, map: map });
+        busmarker.id = vehicle;
+        google.maps.event.addListener(busmarker, "click", function (e) {
+          var content = 'Route: ' + title + '<br /> Latitude: ' + lat + '<br /> Longitude: ' + lng;
+                          content += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker();' value = 'Delete' />";
+                          var infoWindow = new google.maps.InfoWindow({
+                              content: content
+                          });
+                          infoWindow.open(map, busmarker);
+         });
+      }
+
+        if (type =='train')
+          trainmarkers.push(trainmarker);
+        else if (type =='bus')
+          busmarkers.push(busmarker);
+        else if (type =='ferry')
+          ferrymarkers.push(ferrymarker);
+
+       //gmarkers.push(marker);
+      //  marker.type = iconStr;
+      //  GEvent.addListener(marker, "click", function () {
+      //     // FF 1.5 fix
+      //     var text = "<div style=\"white-space:nowrap;\"><div align=\"center\" class=\"smalltext\">"+title +"</div></div>";
+      //     marker.openInfoWindowHtml(text);
+      //  });
+
+    }
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(success);
+        } else {
+          error('Geo Location is not supported');
+        }
+
+
+
+          function Markers(color){
+            for (var i=0;i<markers.length;i++) {
+               if (markers[i].type=='train')  {
+                  map.removeOverlay(markers[i]);
+               }
+            }
+          }
+
+          // socket.on('vehicle', function (data) {
+          //   console.log(data);
+          //   //socket.emit('my other event', { my: 'data' });
+          // });
+    </script>
+</body>
+
+</html>
