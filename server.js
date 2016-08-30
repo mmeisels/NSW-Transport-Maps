@@ -5,6 +5,7 @@ var routes = require('./routes');
 var path = require('path');
 var config = require('./oauth.js');
 var User = require('./user.js');
+var newrelic = require('newrelic');
 //var mongoose = require('mongoose');
 var pg = require('pg');
 var passport = require('passport');
