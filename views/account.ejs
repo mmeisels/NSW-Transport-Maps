@@ -45,19 +45,19 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 <script src="/js/socket.io.js"></script>
 <body>
-  <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&key=AIzaSyCj2NrloLcbGl-hYDdy4dMSXBtkivclso4"></script>
+  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true&key=AIzaSyCj2NrloLcbGl-hYDdy4dMSXBtkivclso4"></script>
 
     <div id="wrapper">
 
@@ -103,22 +103,16 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu alert-dropdown">
                         <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                            <a href="#">Alert <span class="label label-default">NSL Delays</span></a>
                         </li>
                         <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                            <a href="#">Alert <span class="label label-primary">Bridge Accident</span></a>
                         </li>
                         <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                            <a href="#">Alert<span class="label label-success">271 Bus Delayed</span></a>
                         </li>
                         <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                            <a href="#">Alert <span class="label label-info">NSL Cancellation</span></a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -209,7 +203,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="/Account">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -231,7 +225,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="/Account">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -253,7 +247,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="/Account">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -275,7 +269,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="/Account">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -299,12 +293,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
                       <div class="col-lg-4">
                           <div class="panel panel-default">
                               <div class="panel-heading">
                                   <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Bus Routes</h3>
-
                               </div>
                               <div class="panel-body">
                                   <div class="DivToScroll" data-role="main">
@@ -332,7 +324,6 @@
                                   </div>
                               </div>
                           </div>
-                      </div>
                       <!--<div class="col-lg-4">
                           <div class="panel panel-default">
                               <div class="panel-heading">
@@ -588,20 +579,7 @@
         else if (transport=='ferry')
           for(i = 0 ; i< ferrymarkers.length; i++) ferrymarkers[i].setVisible(true);
 
-      // for (i = 0; i < markers.length; i++) {
-      //   console.log('Button Pressed ' + markers[i][1]);
-      //   marker = new google.maps.Marker({
-      //      position: new google.maps.LatLng(markers[i][1], markers[i][2]),
-      //      map: map
-      //    });
-      //
-      //   google.maps.event.addListener(marker, 'click', (function(marker, i) {
-      //        return function() {
-      //            infowindow.setContent(markers[i][0]);
-      //            infowindow.open(map, marker);
-      //        }
-      //   })(marker, i));
-      // }
+
     }
 
     function addMarker(lng, lat, title, iconStr, map, type, vehicle) {
@@ -619,9 +597,7 @@
                           });
                           infoWindow.open(map, trainmarker);
          });
-         for( o=0;o<20; o++ ) {
-           transportArray.push('<tr><td>Train</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+ vehicle.replace('.','') +');" value = "Find Train" /></td></tr>');
-         }
+         transportArray.push('<tr><td>Train</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+ vehicle.replace('.','') +');" value = "Find Train" /></td></tr>');
          //console.log(transportArray);
          document.getElementById("transportArray").innerHTML = transportArray;
       }
@@ -636,10 +612,8 @@
                           });
                           infoWindow.open(map, busmarker);
          });
-         for( l=0;l<30; l++ ) {
-           transportArray.push('<tr><td>Bus</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+vehicle+');" value = "Find Bus" /></td></tr>');
-        }
-      document.getElementById("transportArray").innerHTML = transportArray;
+         transportArray.push('<tr><td>Bus</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+vehicle+');" value = "Find Bus" /></td></tr>');
+         document.getElementById("transportArray").innerHTML = transportArray;
       }
 
         if (type =='train')
@@ -709,8 +683,11 @@
           //   }
           // }
 
+          // socket.on('vehicle', function (data) {
+          //   console.log(data);
+          //   //socket.emit('my other event', { my: 'data' });
+          // });
           socket.emit('my other event', { my: 'data' });
-
     </script>
 </body>
 
