@@ -619,7 +619,9 @@
                           });
                           infoWindow.open(map, trainmarker);
          });
-         transportArray.push('<tr><td>Train</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+ vehicle.replace('.','') +');" value = "Find Train" /></td></tr>');
+         for( o=0;o<20; o++ ) {
+           transportArray.push('<tr><td>Train</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+ vehicle.replace('.','') +');" value = "Find Train" /></td></tr>');
+         }
          //console.log(transportArray);
          document.getElementById("transportArray").innerHTML = transportArray;
       }
@@ -634,8 +636,10 @@
                           });
                           infoWindow.open(map, busmarker);
          });
-         transportArray.push('<tr><td>Bus</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+vehicle+');" value = "Find Bus" /></td></tr>');
-         document.getElementById("transportArray").innerHTML = transportArray;
+         for( l=0;l<30; l++ ) {
+           transportArray.push('<tr><td>Bus</td><td>'+ title + '</td><td><input type = "button" onclick="MarkerZoomTo('+vehicle+');" value = "Find Bus" /></td></tr>');
+        }
+      document.getElementById("transportArray").innerHTML = transportArray;
       }
 
         if (type =='train')
