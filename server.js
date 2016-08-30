@@ -97,6 +97,8 @@ app.get('/account', ensureAuthenticated, function(req, res){
     // } else {
     //   // console.log('User 2' +req.session.passport.user);
     //   // console.log('User 1' +req.session.passport.user.name);
+    console.log(req.user.displayName);
+    console.log(req.user.name);
       res.render('account', { user: req.user});
   //  }
   //});
@@ -107,6 +109,7 @@ app.get('/profile', ensureAuthenticated, function(req, res){
   //    console.log(err);  // handle errors
   //  } else {
   console.log(user.displayName);
+  console.log(user.name);
       res.render('profile', { user: user});
   //  }
   //});
